@@ -18,7 +18,11 @@ class Sidebar {
    * при нажатии на кнопку .sidebar-toggle
    * */
   static initToggleButton() {
-
+    const btnSidebarToggle = document.querySelector('a.sidebar-toggle');
+    btnSidebarToggle.addEventListener('click', (evt) => {
+      evt.preventDefault();
+      document.body.classList.toggle('sidebar-open sidebar-collapse');
+    }, false);
   }
 
   /**
@@ -29,6 +33,24 @@ class Sidebar {
    * выходу устанавливает App.setState( 'init' )
    * */
   static initAuthLinks() {
+    const btnLogin = document.querySelector('li.menu-item_login').querySelector('a');
+    btnLogin.addEventListener('click', (evt) => {
+      evt.preventDefault();
+      App.getModal('login').open();
+    }, false);
+
+    const btnRegister = document.querySelector('li.menu-item_register').querySelector('a');
+    btnRegister.addEventListener('click', (evt) => {
+      evt.preventDefault();
+      App.getModal('register').open();
+    }, false);
+
+    const btnLogout = document.querySelector('li.menu-item_logout').querySelector('a');
+    btnLogout.addEventListener('click', (evt) => {
+      evt.preventDefault();
+      //При нажатии на кнопку «Выйти» необходимо вызвать метод User.logout и после успешного выхода (response.success = true), нужно вызвать App.setState( 'init' )
+      User.logout(User.current(), () => App.setState('init'));
+    }, false);
 
   }
 

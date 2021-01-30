@@ -13,7 +13,11 @@ class AsyncForm {
    * через registerEvents()
    * */
   constructor( element ) {
-
+    if (!element) {
+      throw new Error('Не передан элемент AsyncForm');
+    }
+    this.element = element;
+    this.registerEvents();
   }
 
   /**
@@ -21,7 +25,10 @@ class AsyncForm {
    * вызывает метод submit()
    * */
   registerEvents() {
-
+    this.element.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+      this.submit();
+    })
   }
 
   /**
@@ -32,7 +39,7 @@ class AsyncForm {
    * }
    * */
   getData() {
-
+    let formData = new FormData(elementForm);
   }
 
   onSubmit( options ) {

@@ -41,7 +41,9 @@ class Sidebar {
    * выходу устанавливает App.setState( 'init' )
    * */
   static initAuthLinks() {
-    const btnLogin = document.querySelector('li.menu-item_login').querySelector('a');
+    const btnLogin = document
+      .querySelector('li.menu-item_login')
+      .querySelector('a');
     btnLogin.addEventListener(
       'click',
       (evt) => {
@@ -51,7 +53,9 @@ class Sidebar {
       false
     );
 
-    const btnRegister = document.querySelector('li.menu-item_register').querySelector('a');
+    const btnRegister = document
+      .querySelector('li.menu-item_register')
+      .querySelector('a');
     btnRegister.addEventListener(
       'click',
       (evt) => {
@@ -61,21 +65,23 @@ class Sidebar {
       false
     );
 
-    const btnLogout = document.querySelector('li.menu-item_logout').querySelector('a');
+    const btnLogout = document
+      .querySelector('li.menu-item_logout')
+      .querySelector('a');
     btnLogout.addEventListener(
       'click',
       (evt) => {
         evt.preventDefault();
         // При нажатии на кнопку «Выйти» необходимо вызвать метод User.logout и после успешного выхода (response.success = true), нужно вызвать App.setState( 'init' )
-        // User.logout(User.current(), () => App.setState('init'));
+        User.logout(User.current(), () => App.setState('init'));
 
-        const p = new Promise(function (resolve, reject) {
-          User.logout(User.current());
-        });
-        p.then(
-          (result) => App.setState('init'),
-          (error) => console.log(error)
-        );
+        // const p = new Promise(function (resolve, reject) {
+        //   User.logout(User.current());
+        // });
+        // p.then(
+        //   (result) => App.setState('init'),
+        //   (error) => console.log(error)
+        // );
       },
       false
     );

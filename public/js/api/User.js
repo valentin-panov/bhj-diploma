@@ -20,7 +20,6 @@ class User {
    * */
   static unsetCurrent() {
     localStorage.removeItem('user');
-    App.setState('init');
   }
 
   /**
@@ -28,8 +27,7 @@ class User {
    * из локального хранилища
    * */
   static current() {
-    const data = localStorage['user'];
-    return data && JSON.parse(data);
+    return JSON.parse(localStorage.getItem('user'));
   }
 
   /**
@@ -38,10 +36,10 @@ class User {
    * */
   static fetch(data, callback = (f) => f) {
     return createRequest({
+      data,
       url: this.URL + '/current',
       method: 'GET',
       responseType: 'json',
-      data,
       callback: (err, response) => {
         if (response && response.user) {
           this.setCurrent(response.user);

@@ -11,7 +11,10 @@ class CreateTransactionForm extends AsyncForm {
   constructor(element) {
     super(element);
     // ! ? this.element = element;
-    this.renderAccountsList();
+    // логика отлова залогиненого пользователя
+    if (App.setState === 'user-logged') {
+      this.renderAccountsList();
+    }
   }
 
   /**
@@ -23,7 +26,6 @@ class CreateTransactionForm extends AsyncForm {
       renderItem = (item) => {
         accoutSelect.innerHTML += `<option value="${item.id}">${item.name}</option>`;
       };
-
     Account.list(User.current(), (err, response) => {
       if (response && response.data) {
         accoutSelect.innerHTML = '';

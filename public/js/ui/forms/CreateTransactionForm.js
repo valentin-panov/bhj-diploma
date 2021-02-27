@@ -10,7 +10,7 @@ class CreateTransactionForm extends AsyncForm {
    * */
   constructor(element) {
     super(element);
-    //this.element = element;
+    // ! ? this.element = element;
     this.renderAccountsList();
   }
 
@@ -21,7 +21,6 @@ class CreateTransactionForm extends AsyncForm {
   renderAccountsList() {
     const accoutSelect = this.element.querySelector('.accounts-select'),
       renderItem = (item) => {
-        console.log(item);
         accoutSelect.innerHTML += `<option value="${item.id}">${item.name}</option>`;
       };
 
@@ -33,17 +32,6 @@ class CreateTransactionForm extends AsyncForm {
         return;
       }
     });
-
-    // Account.list(User.current(), (data) => {
-    //   const selectElement = this.element.querySelector('select');
-    //   selectElement.innerHTML = '';
-    //   selectElement.insertAdjacentHTML(
-    //     'afterbegin',
-    //     data.data
-    //       .map((item) => `<option value="${item.id}">${item.name}</option>`)
-    //       .join(' ')
-    //   );
-    // });
   }
 
   /**
@@ -54,9 +42,9 @@ class CreateTransactionForm extends AsyncForm {
    * */
   onSubmit(options) {
     Transaction.create(options.data, (err, response) => {
-      if (!response.success) {
-        return;
-      }
+      // if (!response.success) {
+      //   return;
+      // }
       App.getWidget('accounts').update();
       this.element.reset();
 

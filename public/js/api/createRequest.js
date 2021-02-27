@@ -36,7 +36,7 @@ const createRequest = (options = {}) => {
     }, new FormData());
   }
 
-  // всю голову сломал, почему не работает закомментированный код ниже
+  // ! всю голову сломал, почему не работает закомментированный код ниже
   // method === 'GET'
   //   ? (requestURL +=
   //       '?' +
@@ -65,7 +65,6 @@ const createRequest = (options = {}) => {
   } catch (err) {
     error.call(this, err);
     callback.call(this, err);
-    return xhr;
   }
 
   return xhr;

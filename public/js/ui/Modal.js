@@ -1,3 +1,5 @@
+// done
+
 /**
  * Класс Modal отвечает за
  * управление всплывающими окнами.
@@ -11,7 +13,7 @@ class Modal {
    * Если переданный элемент не существует,
    * необходимо выкинуть ошибку.
    * */
-  constructor( element ) {
+  constructor(element) {
     if (!element) {
       throw new Error('Не передан элемент Modal');
     }
@@ -26,18 +28,34 @@ class Modal {
    * */
   registerEvents() {
     this.elementsClose = [...this.element.querySelectorAll('button[data-dismiss="modal"]')];
-    this.elementsClose.forEach((btn) => btn.addEventListener('click', (evt) => {
-      this.onClose(evt);
-    }));
+    this.elementsClose.forEach((btn) =>
+      btn.addEventListener('click', (evt) => {
+        this.onClose(evt);
+      })
+    );
+    // window.addEventListener(
+    //   'keypress',
+    //   function (evt) {
+    //     if (evt.key == 'Escape' || evt.key == 'Esc') {
+    //       evt.preventDefault();
+    //       alert('esc'); будет время - разберёмся
+    //       return false;
+    //     }
+    //   },
+    //   true
+    // );
   }
 
   /**
    * Срабатывает после нажатия на элементы, закрывающие окно.
    * Закрывает текущее окно (Modal.close())
    * */
-  onClose( e ) {
-    e.preventDefault();
-    this.close();
+  onClose(evt) {
+    const target = evt.target.closest('[data-dismiss="modal"]');
+    if (target) {
+      evt.preventDefault();
+      this.close();
+    }
   }
   /**
    * Удаляет обработчики событий
@@ -55,7 +73,7 @@ class Modal {
   /**
    * Закрывает окно: удаляет CSS-свойство display
    * */
-  close(){
+  close() {
     this.element.style.display = 'none';
   }
 }

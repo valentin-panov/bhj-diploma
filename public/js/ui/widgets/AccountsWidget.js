@@ -12,8 +12,14 @@ class AccountsWidget {
    * Если переданный элемент не существует,
    * необходимо выкинуть ошибку.
    * */
-  constructor( element ) {
-
+  constructor(element) {
+    if (!element) {
+      throw new Error('Элемент должен быть передан!');
+    }
+    this.currentAccountId = null;
+    this.element = element;
+    this.registerEvents();
+    this.update();
   }
 
   /**
@@ -24,7 +30,34 @@ class AccountsWidget {
    * вызывает AccountsWidget.onSelectAccount()
    * */
   registerEvents() {
+    this.element.addEventListener('click', (evt) => {
+      evt.preventDefault();
+      const createAccount = evt.target.closest('.create-account');
 
+      if (createAccount) {
+        const modal = App.getModal('createAccount');
+        return modal.open();
+      }
+
+      const selectedAccount = evt.target.closest('.account');
+
+      if (selectedAccount) {
+        this.onSelectAccount(selectedAccount);
+      }
+    });
+    // const newAccountButtonElement = this.element.querySelector('.create-account');
+    // newAccountButtonElement.addEventListener('click', (evt) => {
+    //   //        e.stopPropagation();
+    //   evt.preventDefault();
+    //   App.getModal('newAccount').open();
+    // });
+    // this.element.addEventListener('click', (evt) => {
+    //   const currentElement = evt.target;
+    //   const account = currentElement.closest('.account');
+    //   if (account && account.classList.contains('account')) {
+    //     this.onSelectAccount(currentElement);
+    //   }
+    // });
   }
 
   /**
@@ -38,7 +71,24 @@ class AccountsWidget {
    * метода renderItem()
    * */
   update() {
-
+    if (!User.current()) {
+      return;
+    }
+    Account.list(User.current(), (err, response) => {
+      if (err) {
+        return;
+      }
+      if (!response.data) {
+        return;
+      }
+      this.clear();
+      this.renderItem(response.data);
+    });
+    // const isCurrentUser = User.current();
+    // if (!isCurrentUser) {
+    //   return;
+    // }
+    //  Account.list(isCurrentUser, this.renderItem.bind(this));
   }
 
   /**
@@ -47,7 +97,8 @@ class AccountsWidget {
    * в боковой колонке
    * */
   clear() {
-
+    const accountElements = [...this.element.querySelectorAll('.account')];
+    accountElements.forEach((element) => element.remove());
   }
 
   /**
@@ -57,8 +108,34 @@ class AccountsWidget {
    * счёта класс .active.
    * Вызывает App.showPage( 'transactions', { account_id: id_счёта });
    * */
-  onSelectAccount( element ) {
+  onSelectAccount(element) {
+    if (!element) {
+      return;
+    }
+    if (this.currentAccountId) {
+      const account = this.element.querySelector(`.account[data-id="${this.currentAccountId}"]`);
+      if (account) {
+        account.classList.remove('active');
+      } else {
+        this.currentAccountId = null;
+      }
+    }
 
+    element.classList.add('active');
+
+    const { id } = element.dataset;
+
+    this.currentAccountId = id;
+
+    App.showPage('transactions', {
+      account_id: id,
+    });
+    // const currentAccount = element.closest('.account');
+    // const accounts = [...element.closest('.accounts-panel').querySelectorAll('.account')];
+    // accounts.forEach((account) => account.classList.remove('active'));
+    // const parent = element.closest('.account');
+    // parent.classList.add('active');
+    // App.showPage('transactions', { account_id: currentAccount.dataset.accountId });
   }
 
   /**
@@ -66,8 +143,13 @@ class AccountsWidget {
    * отображения в боковой колонке.
    * item - объект с данными о счёте
    * */
-  getAccountHTML( item ) {
-
+  getAccountHTML(item) {
+    return `
+    <li class="account" data-account-Id="${item.id}">
+      <a href="#">
+        ${item.name} / ${item.sum} ₽
+      </a>
+    </li>`;
   }
 
   /**
@@ -76,7 +158,24 @@ class AccountsWidget {
    * AccountsWidget.getAccountHTML HTML-код элемента
    * и добавляет его внутрь элемента виджета
    * */
-  renderItem( item ) {
-
+  renderItem(data) {
+    data.forEach((item) => {
+      const { name, id } = item,
+        sum = item.sum.toLocaleString('en'),
+        html = this.getAccountHTML({
+          name,
+          id,
+          sum,
+        });
+      this.element.insertAdjacentHTML('beforeend', html);
+    });
   }
+  //   if (item.success) {
+  //     this.clear();
+  //   }
+  //   const accounts = item.data;
+  //   const ulContainer = this.element.querySelector('li');
+  //   let template = accounts.map((account) => this.getAccountHTML(account)).join(' ');
+  //   ulContainer.insertAdjacentHTML('afterend', template);
+  // }
 }

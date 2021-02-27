@@ -11,7 +11,10 @@ class UserWidget {
    * необходимо выкинуть ошибку.
    * */
   constructor( element ) {
-
+    if (!element) {
+      throw new Error('Элемент должен быть передан!');
+    }
+    this.element = element;
   }
 
   /**
@@ -22,6 +25,11 @@ class UserWidget {
    * авторизованного пользователя
    * */
   update() {
-
+    const currentUser = User.current();
+    if (!currentUser) {
+      return;
+    }
+    const userNameElement = document.querySelector('.user-name');
+    userNameElement.textContent = currentUser.name;
   }
 }

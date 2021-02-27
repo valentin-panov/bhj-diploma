@@ -1,3 +1,5 @@
+// DONE
+
 /**
  * Класс Sidebar отвечает за работу боковой колонки:
  * кнопки скрытия/показа колонки в мобильной версии сайта
@@ -18,11 +20,17 @@ class Sidebar {
    * при нажатии на кнопку .sidebar-toggle
    * */
   static initToggleButton() {
-    const btnSidebarToggle = document.querySelector('a.sidebar-toggle');
-    btnSidebarToggle.addEventListener('click', (evt) => {
-      evt.preventDefault();
-      document.body.classList.toggle('sidebar-open sidebar-collapse');
-    }, false);
+    const btnSidebarToggle = document.querySelector('a.sidebar-toggle'),
+      sidebar = document.querySelector('.sidebar-mini');
+    btnSidebarToggle.addEventListener(
+      'click',
+      (evt) => {
+        evt.preventDefault();
+        sidebar.classList.toggle('sidebar-open');
+        sidebar.classList.toggle('sidebar-collapse');
+      },
+      false
+    );
   }
 
   /**
@@ -34,24 +42,42 @@ class Sidebar {
    * */
   static initAuthLinks() {
     const btnLogin = document.querySelector('li.menu-item_login').querySelector('a');
-    btnLogin.addEventListener('click', (evt) => {
-      evt.preventDefault();
-      App.getModal('login').open();
-    }, false);
+    btnLogin.addEventListener(
+      'click',
+      (evt) => {
+        evt.preventDefault();
+        App.getModal('login').open();
+      },
+      false
+    );
 
     const btnRegister = document.querySelector('li.menu-item_register').querySelector('a');
-    btnRegister.addEventListener('click', (evt) => {
-      evt.preventDefault();
-      App.getModal('register').open();
-    }, false);
+    btnRegister.addEventListener(
+      'click',
+      (evt) => {
+        evt.preventDefault();
+        App.getModal('register').open();
+      },
+      false
+    );
 
     const btnLogout = document.querySelector('li.menu-item_logout').querySelector('a');
-    btnLogout.addEventListener('click', (evt) => {
-      evt.preventDefault();
-      //При нажатии на кнопку «Выйти» необходимо вызвать метод User.logout и после успешного выхода (response.success = true), нужно вызвать App.setState( 'init' )
-      User.logout(User.current(), () => App.setState('init'));
-    }, false);
+    btnLogout.addEventListener(
+      'click',
+      (evt) => {
+        evt.preventDefault();
+        // При нажатии на кнопку «Выйти» необходимо вызвать метод User.logout и после успешного выхода (response.success = true), нужно вызвать App.setState( 'init' )
+        // User.logout(User.current(), () => App.setState('init'));
 
+        const p = new Promise(function (resolve, reject) {
+          User.logout(User.current());
+        });
+        p.then(
+          (result) => App.setState('init'),
+          (error) => console.log(error)
+        );
+      },
+      false
+    );
   }
-
 }

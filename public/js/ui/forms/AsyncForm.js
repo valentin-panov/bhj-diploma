@@ -12,23 +12,25 @@ class AsyncForm {
    * Сохраняет переданный элемент и регистрирует события
    * через registerEvents()
    * */
-  constructor( element ) {
+  constructor(element) {
     if (!element) {
-      throw new Error('Не передан элемент AsyncForm');
+      throw new Error('Элемент не существует');
     }
     this.element = element;
+
     this.registerEvents();
   }
 
   /**
-   * Необходимо запретить отправку формы. В момент отправки
+   * Необходимо запретить отправку формы и в момент отправки
    * вызывает метод submit()
+   * !!! Запрещает странице перезагружаться при попытке успешной отправки - пока не понимаю, как здесь отфильровать успешную отправку
    * */
   registerEvents() {
     this.element.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this.submit();
-    })
+    });
   }
 
   /**
@@ -39,18 +41,24 @@ class AsyncForm {
    * }
    * */
   getData() {
-    let formData = new FormData(elementForm);
+    return [...new FormData(this.element).entries()].reduce((target, [name, value]) => {
+      target[name] = value;
+      return target;
+    }, {});
   }
 
-  onSubmit( options ) {
-
-  }
+  // метод для экстенда другими формами
+  onSubmit(options) {}
 
   /**
    * Вызывает метод onSubmit и передаёт туда
    * данные, полученные из метода getData()
+   *  {
+   *    "результат работы метода getData()"
+   *  }
    * */
   submit() {
-
+    const data = this.getData();
+    this.onSubmit({ data });
   }
 }

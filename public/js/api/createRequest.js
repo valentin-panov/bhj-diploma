@@ -9,7 +9,7 @@ const createRequest = async (options = {}) => {
   const { method = 'GET', data = {}, callback = function () {} } = options;
 
   let requestURL = options.url;
-  let requestData = new FormData();
+  let requestData = new FormData(); // ! let или const? или вообще перенести объявление в цикл фор-ич?
 
   if (options.data) {
     if (method === 'GET') {
@@ -29,7 +29,7 @@ const createRequest = async (options = {}) => {
     let response = await fetch(requestURL, {
       method: method,
       body: method === 'GET' ? null : requestData,
-      credentials: 'same-origin', // 'withCredentials задано в true' == 'include' ?
+      credentials: 'same-origin', // ! 'withCredentials задано в true' == 'include' ?
     });
     if (response.ok) {
       let responseJSON = await response.json();

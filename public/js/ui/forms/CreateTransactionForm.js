@@ -10,7 +10,6 @@ class CreateTransactionForm extends AsyncForm {
    * */
   constructor(element) {
     super(element);
-    // ! ? this.element = element;
     // логика отлова залогиненого пользователя
     if (App.setState === 'user-logged') {
       this.renderAccountsList();

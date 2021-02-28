@@ -80,7 +80,6 @@ class TransactionsPage {
     Account.remove(User.current(), account_id, App.update.bind(App));
     this.lastOptions = null;
     this.clear();
-    App.update();
   }
 
   /**
@@ -135,7 +134,7 @@ class TransactionsPage {
    * Устанавливает заголовок: «Название счёта»
    * */
   clear() {
-    this.renderTitle({ data: { name: 'Счёт не выбран' } });
+    this.renderTitle({ data: { name: 'Счёт не выбран' } }); // ! какое название счёта, если по факту счёт не выбран?
     this.renderTransactions({ data: [] });
     this.lastOptions = null;
   }
@@ -218,13 +217,13 @@ class TransactionsPage {
    * Отрисовывает список транзакций на странице
    * используя getTransactionHTML
    * */
-  renderTransactions(data) {
-    if (!data.data) {
+  renderTransactions(options) {
+    if (!options.data) {
       return;
     }
     const transactionContainer = this.element.querySelector('.content');
     transactionContainer.innerHTML = '';
-    const template = data.data
+    const template = options.data
       .map((transaction) => this.getTransactionHTML(transaction))
       .join(' ');
     transactionContainer.insertAdjacentHTML('afterbegin', template);

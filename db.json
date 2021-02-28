@@ -27,7 +27,7 @@
     {
       "name": "test",
       "user_id": "1",
-      "id": "1we4kbzklpflcko"
+      "id": "1we4kw6klphl1xl"
     }
   ],
   "transactions": [
@@ -191,12 +191,44 @@
       "created_at": "2021-02-28T17:32:04.792Z"
     },
     {
-      "id": "1we4kfnklpfrh65",
-      "type": "INCOME",
-      "name": "test 1",
+      "id": "1we4kvhklphgvs0",
+      "type": "EXPENSE",
+      "name": "test 3",
       "sum": 123,
       "account_id": "1we4kbzklpflcko",
-      "created_at": "2021-02-28T17:37:21.580Z"
+      "created_at": "2021-02-28T18:25:06.527Z"
+    },
+    {
+      "id": "1we4kvlklphitiy",
+      "type": "INCOME",
+      "name": "test 4",
+      "sum": 123,
+      "account_id": "1we4kbzklpflcko",
+      "created_at": "2021-02-28T18:26:36.921Z"
+    },
+    {
+      "id": "1we4kw9klphld9r",
+      "type": "INCOME",
+      "name": "1",
+      "sum": 123,
+      "account_id": "1we4kw6klphl1xl",
+      "created_at": "2021-02-28T18:28:35.822Z"
+    },
+    {
+      "id": "1we4kwcklphlkdj",
+      "type": "INCOME",
+      "name": "2",
+      "sum": 123,
+      "account_id": "1we4kw6klphl1xl",
+      "created_at": "2021-02-28T18:28:45.030Z"
+    },
+    {
+      "id": "1we4kwgklphls14",
+      "type": "EXPENSE",
+      "name": "3",
+      "sum": 123,
+      "account_id": "1we4kw6klphl1xl",
+      "created_at": "2021-02-28T18:28:54.951Z"
     }
   ]
 }

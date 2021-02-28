@@ -11,9 +11,6 @@ const createRequest = async (options = {}) => {
   let requestURL = options.url;
   let requestData = new FormData();
 
-  // console.log('CrReq OPTIONS DATA', options.data); // ! не забыть убрать
-  // console.log(callback); // ! не забыть убрать
-
   if (options.data) {
     if (method === 'GET') {
       const urlAppendArray = Object.entries(data).map(
@@ -36,8 +33,6 @@ const createRequest = async (options = {}) => {
     });
     if (response.ok) {
       let responseJSON = await response.json();
-
-      // console.log('response - JSON', responseJSON); // ! не забыть убрать
 
       callback(responseJSON);
       return responseJSON;

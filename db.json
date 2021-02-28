@@ -6,58 +6,6 @@
       "password": "demo",
       "id": "1",
       "isAuthorized": true
-    },
-    {
-      "id": "1we4bl7klo9lh0l",
-      "isAuthorized": false
-    },
-    {
-      "id": "1we4bl7klo9lh0u",
-      "isAuthorized": false
-    },
-    {
-      "id": "1we4bl7klo9lh1i",
-      "isAuthorized": false
-    },
-    {
-      "id": "1we4blhklo9lm36",
-      "isAuthorized": false
-    },
-    {
-      "id": "1we4blhklo9lm3e",
-      "isAuthorized": false
-    },
-    {
-      "id": "1we4blhklo9lm3y",
-      "isAuthorized": false
-    },
-    {
-      "name": "1",
-      "email": "1@1",
-      "password": "1",
-      "id": "1we4g6gklp450l5",
-      "isAuthorized": false
-    },
-    {
-      "name": "2",
-      "email": "2@2",
-      "password": "2",
-      "id": "1we4ga9klp4beae",
-      "isAuthorized": false
-    },
-    {
-      "name": "1",
-      "email": "1@2",
-      "password": "1",
-      "id": "1we4gafklp4f4qe",
-      "isAuthorized": false
-    },
-    {
-      "name": "1",
-      "email": "2@1",
-      "password": "1",
-      "id": "1we4gb4klp4fde9",
-      "isAuthorized": false
     }
   ],
   "accounts": [

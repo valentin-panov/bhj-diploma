@@ -9,10 +9,10 @@ class CreateAccountForm extends AsyncForm {
    * и сбрасывает форму
    * */
   onSubmit(options) {
-    Account.create(options.data, (err, response) => {
-      // if (!response.success) {
-      //   return;
-      // }
+    Account.create(options, (response) => {
+      if (!response.success) {
+        return;
+      }
       App.getWidget('accounts').update();
       this.element.reset();
 

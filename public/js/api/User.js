@@ -12,6 +12,7 @@ class User {
    * */
   static setCurrent(user) {
     localStorage['user'] = JSON.stringify(user);
+    App.update(); // ! найти лучшее место для этого
   }
 
   /**
@@ -35,14 +36,14 @@ class User {
    * авторизованном пользователе.
    * */
   static async fetch(data, callback = (f) => f) {
-    User.unsetCurrent();
-    // return await createRequest({
-    //   data,
-    //   url: this.URL + '/current',
-    //   method: 'GET',
-    //   responseType: 'json',
-    //   callback,
-    // });
+    // User.unsetCurrent(); // ! если данных об авторизации нет, то нужно ансетить ?
+    return await createRequest({
+      data,
+      url: this.URL + '/current',
+      method: 'GET',
+      responseType: 'json',
+      callback,
+    });
   }
 
   /**
@@ -66,18 +67,13 @@ class User {
    * сохранить пользователя через метод
    * User.setCurrent.
    * */
-  static register(data, callback = (f) => f) {
-    return createRequest({
+  static async register(data, callback = (f) => f) {
+    return await createRequest({
       url: this.URL + '/register',
       method: 'POST',
       responseType: 'json',
       data,
-      callback: (err, response) => {
-        if (response && response.user) {
-          this.setCurrent(response.user);
-        }
-        callback.call(this, err, response);
-      },
+      callback,
     });
   }
 
@@ -89,7 +85,7 @@ class User {
     return await createRequest({
       url: this.URL + '/logout',
       method: 'POST',
-      data: { data },
+      data,
       callback: (response) => {
         if (response.success) {
           User.unsetCurrent();

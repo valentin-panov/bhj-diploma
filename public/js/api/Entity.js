@@ -8,8 +8,8 @@ class Entity {
    * Это могут быть счета или доходы/расходы
    * (в зависимости от того, что наследуется от Entity)
    * */
-  static list(data, callback = (f) => f) {
-    return createRequest({
+  static async list(data, callback = (f) => f) {
+    return await createRequest({
       url: this.URL,
       method: 'GET',
       responseType: 'json',

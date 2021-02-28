@@ -45,19 +45,6 @@ class AccountsWidget {
         this.onSelectAccount(selectedAccount);
       }
     });
-    // const newAccountButtonElement = this.element.querySelector('.create-account');
-    // newAccountButtonElement.addEventListener('click', (evt) => {
-    //   //        e.stopPropagation();
-    //   evt.preventDefault();
-    //   App.getModal('newAccount').open();
-    // });
-    // this.element.addEventListener('click', (evt) => {
-    //   const currentElement = evt.target;
-    //   const account = currentElement.closest('.account');
-    //   if (account && account.classList.contains('account')) {
-    //     this.onSelectAccount(currentElement);
-    //   }
-    // });
   }
 
   /**
@@ -71,11 +58,13 @@ class AccountsWidget {
    * метода renderItem()
    * */
   update() {
-    if (!User.current()) {
+    const isCurrentUser = User.current();
+    if (!isCurrentUser) {
       return;
     }
-    Account.list(User.current(), (err, response) => {
-      if (err) {
+    Account.list(isCurrentUser, (response) => {
+      if (response.error) {
+        console.log(response.error);
         return;
       }
       if (!response.data) {
@@ -84,11 +73,6 @@ class AccountsWidget {
       this.clear();
       this.renderItem(response.data);
     });
-    // const isCurrentUser = User.current();
-    // if (!isCurrentUser) {
-    //   return;
-    // }
-    //  Account.list(isCurrentUser, this.renderItem.bind(this));
   }
 
   /**
@@ -110,32 +94,18 @@ class AccountsWidget {
    * */
   onSelectAccount(element) {
     if (!element) {
-      return;
+      throw new Error('Элемент должен быть передан!');
     }
-    if (this.currentAccountId) {
-      const account = this.element.querySelector(`.account[data-id="${this.currentAccountId}"]`);
-      if (account) {
-        account.classList.remove('active');
-      } else {
-        this.currentAccountId = null;
-      }
-    }
-
-    element.classList.add('active');
-
-    const { id } = element.dataset;
-
-    this.currentAccountId = id;
+    const currentAccount = element.closest('.account');
+    const accounts = [
+      ...element.closest('.accounts-panel').querySelectorAll('.account'),
+    ];
+    accounts.forEach((account) => account.classList.remove('active'));
+    currentAccount.classList.add('active');
 
     App.showPage('transactions', {
-      account_id: id,
+      account_id: currentAccount.dataset.accountId,
     });
-    // const currentAccount = element.closest('.account');
-    // const accounts = [...element.closest('.accounts-panel').querySelectorAll('.account')];
-    // accounts.forEach((account) => account.classList.remove('active'));
-    // const parent = element.closest('.account');
-    // parent.classList.add('active');
-    // App.showPage('transactions', { account_id: currentAccount.dataset.accountId });
   }
 
   /**
@@ -170,12 +140,4 @@ class AccountsWidget {
       this.element.insertAdjacentHTML('beforeend', html);
     });
   }
-  //   if (item.success) {
-  //     this.clear();
-  //   }
-  //   const accounts = item.data;
-  //   const ulContainer = this.element.querySelector('li');
-  //   let template = accounts.map((account) => this.getAccountHTML(account)).join(' ');
-  //   ulContainer.insertAdjacentHTML('afterend', template);
-  // }
 }

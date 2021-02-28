@@ -26,8 +26,8 @@ class CreateTransactionForm extends AsyncForm {
       renderItem = (item) => {
         accoutSelect.innerHTML += `<option value="${item.id}">${item.name}</option>`;
       };
-    Account.list(User.current(), (err, response) => {
-      if (response && response.data) {
+    Account.list(User.current(), (response) => {
+      if (response.data) {
         accoutSelect.innerHTML = '';
         response.data.forEach(renderItem);
       } else {
@@ -43,14 +43,15 @@ class CreateTransactionForm extends AsyncForm {
    * в котором находится форма
    * */
   onSubmit(options) {
-    Transaction.create(options.data, (err, response) => {
-      // if (!response.success) {
-      //   return;
-      // }
+    Transaction.create(options, (response) => {
+      if (!response.success) {
+        alert(response.error);
+        return;
+      }
       App.getWidget('accounts').update();
       this.element.reset();
 
-      const { type } = options.data,
+      const { type } = options,
         modalName = 'new' + type[0].toUpperCase() + type.substr(1),
         modal = App.getModal(modalName);
       modal.close();

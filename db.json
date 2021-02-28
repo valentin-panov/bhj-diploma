@@ -23,6 +23,11 @@
       "name": "Бизнес",
       "user_id": "1",
       "id": "3"
+    },
+    {
+      "name": "test",
+      "user_id": "1",
+      "id": "1we4kbzklpflcko"
     }
   ],
   "transactions": [
@@ -160,6 +165,38 @@
       "sum": 300000,
       "type": "expense",
       "user_id": "1"
+    },
+    {
+      "id": "1we4k9xklpfizil",
+      "type": "INCOME",
+      "name": "test",
+      "sum": 123,
+      "account_id": "1we4k81klpfgdww",
+      "created_at": "2021-02-28T17:30:45.452Z"
+    },
+    {
+      "id": "1we4kapklpfjylu",
+      "type": "INCOME",
+      "name": "123",
+      "sum": 123,
+      "account_id": "1we4k81klpfgdww",
+      "created_at": "2021-02-28T17:31:30.929Z"
+    },
+    {
+      "id": "1we4kbiklpfkoqh",
+      "type": "INCOME",
+      "name": "123",
+      "sum": 123,
+      "account_id": "1we4k81klpfgdww",
+      "created_at": "2021-02-28T17:32:04.792Z"
+    },
+    {
+      "id": "1we4kfnklpfrh65",
+      "type": "INCOME",
+      "name": "test 1",
+      "sum": 123,
+      "account_id": "1we4kbzklpflcko",
+      "created_at": "2021-02-28T17:37:21.580Z"
     }
   ]
 }

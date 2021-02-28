@@ -30,21 +30,25 @@ class AccountsWidget {
    * вызывает AccountsWidget.onSelectAccount()
    * */
   registerEvents() {
-    this.element.addEventListener('click', (evt) => {
-      evt.preventDefault();
-      const createAccount = evt.target.closest('.create-account');
+    this.element.addEventListener(
+      'click',
+      (evt) => {
+        evt.preventDefault();
+        const createAccount = evt.target.closest('.create-account');
 
-      if (createAccount) {
-        const modal = App.getModal('createAccount');
-        return modal.open();
-      }
+        if (createAccount) {
+          const modal = App.getModal('createAccount');
+          return modal.open();
+        }
 
-      const selectedAccount = evt.target.closest('.account');
+        const selectedAccount = evt.target.closest('.account');
 
-      if (selectedAccount) {
-        this.onSelectAccount(selectedAccount);
-      }
-    });
+        if (selectedAccount) {
+          this.onSelectAccount(selectedAccount);
+        }
+      },
+      false
+    );
   }
 
   /**

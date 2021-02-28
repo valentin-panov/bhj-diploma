@@ -34,21 +34,15 @@ class User {
    * Получает информацию о текущем
    * авторизованном пользователе.
    * */
-  static fetch(data, callback = (f) => f) {
-    return createRequest({
-      data,
-      url: this.URL + '/current',
-      method: 'GET',
-      responseType: 'json',
-      callback: (err, response) => {
-        if (response && response.user) {
-          this.setCurrent(response.user);
-        } else {
-          this.unsetCurrent();
-        }
-        callback.call(this, err, response);
-      },
-    });
+  static async fetch(data, callback = (f) => f) {
+    User.unsetCurrent();
+    // return await createRequest({
+    //   data,
+    //   url: this.URL + '/current',
+    //   method: 'GET',
+    //   responseType: 'json',
+    //   callback,
+    // });
   }
 
   /**
@@ -57,18 +51,12 @@ class User {
    * сохранить пользователя через метод
    * User.setCurrent.
    * */
-  static login(data, callback = (f) => f) {
-    return createRequest({
+  static async login(data, callback = (f) => f) {
+    return await createRequest({
       url: this.URL + '/login',
       method: 'POST',
-      responseType: 'json',
       data,
-      callback: (err, response) => {
-        if (response && response.user) {
-          this.setCurrent(response.user);
-        }
-        callback.call(this, err, response);
-      },
+      callback,
     });
   }
 
@@ -97,17 +85,16 @@ class User {
    * Производит выход из приложения. После успешного
    * выхода необходимо вызвать метод User.unsetCurrent
    * */
-  static logout(data, callback = (f) => f) {
-    return createRequest({
+  static async logout(data, callback = (f) => f) {
+    return await createRequest({
       url: this.URL + '/logout',
       method: 'POST',
-      responseType: 'json',
-      data,
-      callback: (err, response) => {
-        if (response && response.success) {
-          this.unsetCurrent();
+      data: { data },
+      callback: (response) => {
+        if (response.success) {
+          User.unsetCurrent();
+          App.setState('init');
         }
-        callback.call(this, err, response);
       },
     });
   }

@@ -41,10 +41,13 @@ class AsyncForm {
    * }
    * */
   getData() {
-    return [...new FormData(this.element).entries()].reduce((target, [name, value]) => {
-      target[name] = value;
-      return target;
-    }, {});
+    return [...new FormData(this.element).entries()].reduce(
+      (target, [name, value]) => {
+        target[name] = value;
+        return target;
+      },
+      {}
+    );
   }
 
   // метод для экстенда другими формами
@@ -59,6 +62,6 @@ class AsyncForm {
    * */
   submit() {
     const data = this.getData();
-    this.onSubmit({ data });
+    this.onSubmit({ data }); // ! вот здесь вообще не понятно, зачем оборачивать объект в объект? (по инструкции в комментарии выше)
   }
 }

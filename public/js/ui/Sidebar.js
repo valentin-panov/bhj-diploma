@@ -72,16 +72,7 @@ class Sidebar {
       'click',
       (evt) => {
         evt.preventDefault();
-        // При нажатии на кнопку «Выйти» необходимо вызвать метод User.logout и после успешного выхода (response.success = true), нужно вызвать App.setState( 'init' )
-        User.logout(User.current(), () => App.setState('init'));
-
-        // const p = new Promise(function (resolve, reject) {
-        //   User.logout(User.current());
-        // });
-        // p.then(
-        //   (result) => App.setState('init'),
-        //   (error) => console.log(error)
-        // );
+        User.logout(User.current());
       },
       false
     );

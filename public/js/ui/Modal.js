@@ -27,23 +27,14 @@ class Modal {
    * (с помощью метода Modal.onClose)
    * */
   registerEvents() {
-    this.elementsClose = [...this.element.querySelectorAll('button[data-dismiss="modal"]')];
+    this.elementsClose = [
+      ...this.element.querySelectorAll('button[data-dismiss="modal"]'),
+    ];
     this.elementsClose.forEach((btn) =>
       btn.addEventListener('click', (evt) => {
         this.onClose(evt);
       })
     );
-    // window.addEventListener(
-    //   'keypress',
-    //   function (evt) {
-    //     if (evt.key == 'Escape' || evt.key == 'Esc') {
-    //       evt.preventDefault();
-    //       alert('esc'); будет время - разберёмся
-    //       return false;
-    //     }
-    //   },
-    //   true
-    // );
   }
 
   /**
@@ -61,7 +52,9 @@ class Modal {
    * Удаляет обработчики событий
    * */
   unregisterEvents() {
-    this.elementsClose.forEach((btn) => btn.removeEventListener('click', this.onClose));
+    this.elementsClose.forEach((btn) =>
+      btn.removeEventListener('click', this.onClose)
+    );
   }
   /**
    * Открывает окно: устанавливает CSS-свойство display
